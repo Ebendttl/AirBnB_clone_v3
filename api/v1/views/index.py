@@ -1,31 +1,40 @@
 #!/usr/bin/python3
-"""This module contanis routes for /status and /stats"""
+"""
+Creating an endpoint that
+retrieves the number of each objects by type
+"""
 
-from flask import jsonify
-from api.v1.views import app_views
+
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from api.v1.views import app_views
+from flask import jsonify
 from models import storage
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """Returns the status of an API"""
+    """
+    Returning the status of an API
+        Checking the status 200 - OK
+    """
 
     return jsonify({"status": "OK"}), 200
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """Return the number of each objects by type"""
-
-    classes = {"users": User, "places": Place, "cities": City,
-               "states": State, "amenities": Amenity, "reviews": Review}
-    new_dict = {}
-    for key, value in classes.items():
-        new_dict[key] = storage.count(value)
-    return jsonify(new_dict)
+    """
+    Retrieving the type of objects
+        Storing all classes into a variable
+    """
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User}
+    stats = {}
+    for class_name, cls in classes.items():
+        stats[class_name] = storage.count(cls)
+    return jsonify(stats)

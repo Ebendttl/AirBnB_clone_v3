@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-This module handles all default RESTFul APIs for
-the link between (Place) objects and (Amenity) objects
+Handling RESTFUL APIs actions for
+Place objects and Amenity objects
 """
 
 from api.v1.views import app_views
@@ -15,7 +15,10 @@ from os import getenv
 @app_views.route("/places/<place_id>/amenities", methods=["GET"],
                  strict_slashes=False)
 def place_amenities(place_id):
-    """Returns a list of amenities of a specific place"""
+    """
+    Returning the amenities list
+    of a specific place
+    """
 
     place = storage.get(Place, place_id)
 
@@ -30,7 +33,10 @@ def place_amenities(place_id):
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
-    """Deletes an amenity of a specific place opejct using its id"""
+    """
+    Function that deletes an amenity
+    in a specific place obejct of its id
+    """
 
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
@@ -53,7 +59,10 @@ def delete_place_amenity(place_id, amenity_id):
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["POST"], strict_slashes=False)
 def add_amenity_to_place(place_id, amenity_id):
-    """Adds an amenity to a specific place opejct using its id"""
+    """
+    Adding amenity to specific 
+    place obejct with its id
+    """
 
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)

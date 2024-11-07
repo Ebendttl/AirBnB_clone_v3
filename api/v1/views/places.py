@@ -1,20 +1,23 @@
 #!/usr/bin/python3
-"""This module handles all default RESTFul APIs for Place object"""
+"""Handling RESTFUL API actions for Place objects"""
 
+from flask import jsonify, request, abort
 from api.v1.views import app_views
-from flask import abort, jsonify, request
-from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
 from models.state import State
 from models.amenity import Amenity
+from models import storage
 
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def city_places(city_id):
-    """Returns a list of places of a specific City"""
+    """
+    Returning the places list
+    of the specific City
+    """
 
     city = storage.get(City, city_id)
 
@@ -28,7 +31,9 @@ def city_places(city_id):
 
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
 def get_place(place_id):
-    """Return a place by its id"""
+    """
+    Place by its id is returned
+    """
 
     place = storage.get(Place, place_id)
 
@@ -41,7 +46,9 @@ def get_place(place_id):
 @app_views.route("/places/<place_id>", methods=["DELETE"],
                  strict_slashes=False)
 def delete_place(place_id):
-    """Deletes a place using its id"""
+    """
+    Deleting place with its id
+    """
 
     place = storage.get(Place, place_id)
 
@@ -57,7 +64,11 @@ def delete_place(place_id):
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
 def create_place(city_id):
-    """Creates a new place that is a part of a specific city"""
+    """
+    Creating a new place
+    which is part of a
+    specific city
+    """
 
     city = storage.get(City, city_id)
 
@@ -93,7 +104,9 @@ def create_place(city_id):
 
 @app_views.route("/places/<place_id>", methods=["PUT"], strict_slashes=False)
 def update_place(place_id):
-    """Updates a place"""
+    """
+    Updating place
+    """
 
     place = storage.get(Place, place_id)
 
@@ -119,13 +132,13 @@ def update_place(place_id):
 @app_views.route("/places_search", methods=["POST"], strict_slashes=False)
 def places_search():
     """
-    Retrieves all Place objects depending of the JSON
-    in the body of the request.
+    Retrieving all the Places objects 
+    depending on JSON that's in the body's request.
 
-    The JSON body can contain 3 optional keys:
-        states: list of State ids
-        cities: list of City ids
-        amenities: list of Amenity ids
+    The body of JSON may contain 3 keys optionally:
+    - states: list of State id
+    - cities: list of City id
+    - amenities: list of Amenity id
     """
 
     try:
